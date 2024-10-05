@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget{
-  const Header({super.key});
 
+String? title;
   @override
   Size get preferredSize => Size.fromHeight(70); // Adjust height as needed
-
+  
+Header({
+  this.title
+});
   @override
   Widget build(BuildContext context) {
     return  AppBar(
-
+      centerTitle: true,
+      title: Text(title ?? '',
+      style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold
+                )
+      ),
       backgroundColor: Color(0XFF26211C),
       leading: Padding(
         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.008),

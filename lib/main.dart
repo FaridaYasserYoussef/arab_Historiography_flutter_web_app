@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     
       routes: {
        HomePage.routeName :(context) => HomePage(),
-       BookDetailsScreen.routeName :(context) => BookDetailsScreen()
+      //  BookDetailsScreen.routeName :(context) => BookDetailsScreen()
       },
     );
   }

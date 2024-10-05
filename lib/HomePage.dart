@@ -194,8 +194,8 @@ Row(
                     child: GestureDetector(
                       onTap: () {
                         insideListView = true;
-                        print("search Result you clicked on is ${searchResults[index]}");
-                        Navigator.pushNamed(context, BookDetailsScreen.routeName, arguments: searchResults[index]);
+                        // print("search Result you clicked on is ${searchResults[index]}");
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> BookDetailsScreen(bookModel: searchResults[index])));
                       },
                       child: ListTile(
                         title: Text(searchResults[index].title ?? 'nan', style: TextStyle(color: Colors.white),),
