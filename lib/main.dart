@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:trial_flutter_web_app/HomePage.dart';
-import 'package:trial_flutter_web_app/testHomePage.dart';
+import 'package:trial_flutter_web_app/HomePage.dart';
+import 'package:trial_flutter_web_app/Screens/bookDetailsScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
     debugShowCheckedModeBanner: false,
     
-      home: TestHomePage(),
+      routes: {
+       HomePage.routeName :(context) => HomePage(),
+       BookDetailsScreen.routeName :(context) => BookDetailsScreen()
+      },
     );
   }
 }
