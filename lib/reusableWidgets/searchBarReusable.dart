@@ -128,6 +128,7 @@ class _SearchBarReusableState extends State<SearchBarReusable> {
                           provider.selectSearchItem(searchResults[index]);
                           setState(() {
                             searchBarFocus = false;
+                            
                           });
                           // print("search Result you clicked on is ${searchResults[index]}");
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=> BookDetailsScreen(bookModel: searchResults[index])));
@@ -136,7 +137,7 @@ class _SearchBarReusableState extends State<SearchBarReusable> {
                         },
                         child: ListTile(
                           title: Text(searchResults[index].title ?? 'nan', style: TextStyle(color: Colors.white),),
-                          leading: searchResults[index].imageData == null? const Icon(Icons.book) :  Image(image: MemoryImage(searchResults[index].imageData!)),
+                          leading: searchResults[index].imagePath == null? const Icon(Icons.book) :  Image(image: NetworkImage(API.hostConnectMedia + searchResults[index].imagePath!)),
                         ),
                       ),
                                       );

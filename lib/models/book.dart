@@ -13,7 +13,7 @@ class Book{
   int? authoringYear;
   String? authorOrigin;
   int? imageID;
-  Uint8List? imageData;
+  // Uint8List? imageData;
 
   Book({
 this.id,
@@ -27,7 +27,7 @@ this.publisher,
 this.authoringYear,
 this.authorOrigin,
 this.imageID,
-this.imageData
+// this.imageData
   });
 
      factory Book.fromSearchResultJson(Map<String, dynamic> json) => Book(
@@ -41,7 +41,7 @@ this.imageData
      authoringYear: json['authoringYear'].toString() == 'nan'? null: double.parse(json['authoringYear'].toString()).toInt(),
      authorOrigin: json['authorOrigin'].toString() == 'nan'? null: json['authorOrigin'].toString(),
      imageID: json['imageID'].toString() == 'nan'? null: int.parse(json['imageID'].toString()),
-     imageData: json["imageData"].toString() == 'nan'? null: base64Decode(json["imageData"])
+    //  imageData: json["imageData"].toString() == 'nan'? null: base64Decode(json["imageData"])
   
    );
 

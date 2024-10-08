@@ -103,11 +103,11 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                             backgroundColor:Color(0XFF26211C),
                             cover: Transform.rotate(
                             angle: 3.14159,
-                              child: ClipRRect(child: widget.bookModel.imageData == null ? Image(
+                              child: ClipRRect(child: widget.bookModel.imagePath == "" ? Image(
                                 height: 500,
                                 image:  AssetImage("assets/images/pageBackground.jpg"), fit: BoxFit.fill,) :Image(
                                 height: 500,
-                                image:  MemoryImage(widget.bookModel.imageData!), fit: BoxFit.fill,)
+                                image:  NetworkImage(API.hostConnectMedia + widget.bookModel.imagePath!), fit: BoxFit.fill,)
                                 
                                 ),
                             ),
