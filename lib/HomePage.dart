@@ -56,11 +56,14 @@ class _HomePageState extends State<HomePage> {
               Directionality(
                 textDirection: TextDirection.rtl,
                 child: Padding(
-                  padding:  EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.24),
+                  padding:  EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.24, 
+                  top: MediaQuery.of(context).size.height * 0.08,
+                  bottom: MediaQuery.of(context).size.height * 0.06
+                  ),
                   child: AnimatedTextKit(
                     animatedTexts: [
                       TypewriterAnimatedText(
-                        "إبحث بعنوان أكثر من 2000 كتاب باللغة العربية",
+                        "إبحث في أكثر من 2000 كتاب باللغة العربية",
                         textStyle: const TextStyle(
                           fontSize: 32.0,
                           fontWeight: FontWeight.bold,

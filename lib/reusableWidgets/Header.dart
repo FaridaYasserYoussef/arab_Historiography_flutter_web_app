@@ -4,7 +4,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget{
 
 String? title;
   @override
-  Size get preferredSize => Size.fromHeight(70); // Adjust height as needed
+  Size get preferredSize => Size.fromHeight(110); // Adjust height as needed
   
 Header({
   this.title
@@ -12,6 +12,8 @@ Header({
   @override
   Widget build(BuildContext context) {
     return  AppBar(
+      leadingWidth: 90,
+      toolbarHeight: 100,
       centerTitle: true,
       title: Text(title ?? '',
       style: TextStyle(
@@ -21,13 +23,13 @@ Header({
                 )
       ),
       backgroundColor: Color(0XFF26211C),
-      leading: Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.008),
-        child: ImageIcon(
-          AssetImage("assets/images/logo.png"),
-          color: Colors.white,
-          size: MediaQuery.of(context).size.height * 0.10,
+      leading: 
+      ImageIcon(
+        AssetImage("assets/images/logo.png",
+         
         ),
+        color: Colors.white,
+        size: MediaQuery.of(context).size.height * 0.25,
       ),
       actions: [
         Padding(

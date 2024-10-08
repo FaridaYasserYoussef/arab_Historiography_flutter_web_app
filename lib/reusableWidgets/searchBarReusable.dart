@@ -126,6 +126,9 @@ class _SearchBarReusableState extends State<SearchBarReusable> {
                       child: GestureDetector(
                         onTap: () {
                           provider.selectSearchItem(searchResults[index]);
+                          setState(() {
+                            searchBarFocus = false;
+                          });
                           // print("search Result you clicked on is ${searchResults[index]}");
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=> BookDetailsScreen(bookModel: searchResults[index])));
 
