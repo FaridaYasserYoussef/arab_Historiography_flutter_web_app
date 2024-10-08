@@ -5,29 +5,25 @@ import 'package:trial_flutter_web_app/reusableWidgets/Header.dart';
 import 'package:animated_book_widget/animated_book_widget.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
-class BookDetailsScreen extends StatefulWidget {
+class BookDetailsWidget extends StatefulWidget {
   // static const routeName = "/bookDetails";
 
 Book bookModel;
-BookDetailsScreen({
+BookDetailsWidget({
   required this.bookModel
 });
 
   @override
-  State<BookDetailsScreen> createState() => _BookDetailsScreenState();
+  State<BookDetailsWidget> createState() => _BookDetailsWidgetState();
 }
 
-class _BookDetailsScreenState extends State<BookDetailsScreen> {
+class _BookDetailsWidgetState extends State<BookDetailsWidget> {
  double value = 0;
 
   @override
   Widget build(BuildContext context) {
     // Book bookModel = ModalRoute.of(context)!.settings.arguments as Book;
-    return Scaffold(
-      appBar: Header(title: "تفاصيل الكتاب",),
-      backgroundColor: Color(0XFF26211C),
-      body: SingleChildScrollView(
-        child: Row(
+    return Row(
           children: [
                                                 Expanded(
                   child: Padding(
@@ -107,9 +103,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             backgroundColor:Color(0XFF26211C),
                             cover: Transform.rotate(
                             angle: 3.14159,
-                              child: ClipRRect(child: Image(
+                              child: ClipRRect(child: widget.bookModel.imageData == null ? Image(
                                 height: 500,
-                                image: NetworkImage(API.hostConnectMedia + widget.bookModel.imagePath!), fit: BoxFit.fill,)),
+                                image:  AssetImage("assets/images/pageBackground.jpg"), fit: BoxFit.fill,) :Image(
+                                height: 500,
+                                image:  MemoryImage(widget.bookModel.imageData!), fit: BoxFit.fill,)
+                                
+                                ),
                             ),
                             content: Stack(
                               children: [
@@ -225,8 +225,6 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        );
   }
 }

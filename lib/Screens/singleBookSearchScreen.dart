@@ -1,11 +1,47 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trial_flutter_web_app/Providers/searchResultsProvider.dart';
+import 'package:trial_flutter_web_app/api_connections.dart';
+import 'package:trial_flutter_web_app/models/book.dart';
+import 'package:trial_flutter_web_app/reusableWidgets/Header.dart';
+import 'package:http/http.dart' as http;
+import 'package:trial_flutter_web_app/reusableWidgets/bookDetailsWidget.dart';
+import 'package:trial_flutter_web_app/reusableWidgets/searchBarReusable.dart';
 
 class SingleBookSearchScreen
- extends StatelessWidget {
+ extends StatefulWidget {
  static const String routeName = "/singleBookSearch";
 
   @override
+  State<SingleBookSearchScreen> createState() => _SingleBookSearchScreenState();
+}
+
+class _SingleBookSearchScreenState extends State<SingleBookSearchScreen> {
+  
+
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    var provider = Provider.of<SearchResultsProvider>(context);
+    return Scaffold(
+      backgroundColor: Color(0XFF26211C),
+      appBar: Header(title: "البحث عن كتاب محدد",),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          Padding(
+            padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
+            child: SearchBarReusable(),
+          ),
+
+          Visibility(
+            visible: provider.selectedSearchItem == null ? false : true,
+            child: Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
+          child: BookDetailsWidget(bookModel: provider.selectedSearchItem ?? Book(title: "", imagePath: "")),
+          ))
+
+          
+        ],)),
+    );
   }
 }
