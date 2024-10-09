@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trial_flutter_web_app/Providers/searchResultsProvider.dart';
 import 'package:trial_flutter_web_app/api_connections.dart';
+import 'package:trial_flutter_web_app/enums/search_type.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
 import 'package:trial_flutter_web_app/reusableWidgets/Header.dart';
 import 'package:http/http.dart' as http;
@@ -56,7 +57,7 @@ class _SingleBookSearchScreenState extends State<SingleBookSearchScreen> {
                 ),
           Padding(
             padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
-            child: SearchBarReusable(),
+            child: SearchBarReusable(searchType: SearchType.SingleBookSearch,),
           ),
 
           Visibility(

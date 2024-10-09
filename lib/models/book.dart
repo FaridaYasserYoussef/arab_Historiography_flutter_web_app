@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:trial_flutter_web_app/models/pages.dart';
+
 class Book{
   int? id;
   String? title;
@@ -13,6 +15,7 @@ class Book{
   int? authoringYear;
   String? authorOrigin;
   int? imageID;
+  List<Page>? pages;
   // Uint8List? imageData;
 
   Book({
@@ -27,6 +30,7 @@ this.publisher,
 this.authoringYear,
 this.authorOrigin,
 this.imageID,
+this.pages
 // this.imageData
   });
 
@@ -41,7 +45,10 @@ this.imageID,
      authoringYear: json['authoringYear'].toString() == 'nan'? null: double.parse(json['authoringYear'].toString()).toInt(),
      authorOrigin: json['authorOrigin'].toString() == 'nan'? null: json['authorOrigin'].toString(),
      imageID: json['imageID'].toString() == 'nan'? null: int.parse(json['imageID'].toString()),
-    //  imageData: json["imageData"].toString() == 'nan'? null: base64Decode(json["imageData"])
+    pages: (json['pages'] as List<dynamic>).isEmpty? null:  (json['pages'] as List<dynamic>).map((item){
+      return Page.fromJson((item as Map<String, dynamic>));
+    }).toList()
+
   
    );
 
