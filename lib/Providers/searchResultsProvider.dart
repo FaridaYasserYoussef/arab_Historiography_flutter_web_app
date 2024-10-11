@@ -7,7 +7,8 @@ class SearchResultsProvider with ChangeNotifier{
   Book? get selectedSearchItem => selectedSearchResult;
   String allBooksSearchMode = "match_phrase";
   String get getAllBooksSearchMode => allBooksSearchMode;
-
+bool? isAllBooksSearchResultsReceived = false;
+bool? get getIsAllBooksSearchResultsReceived =>isAllBooksSearchResultsReceived;
 int allBooksSearchResultsPagesCount = 0;
 int get getAllBooksSearchResultsPagesCount => allBooksSearchResultsPagesCount;
 int allBooksSearchResultsBooksCount = 0;
@@ -16,6 +17,10 @@ List<Book>? allBooksSearchResult = [];
 List<Book>? get getAllBooksSearchResult => allBooksSearchResult;
 
 
+void setAllBooksSearchResultsReceived(bool allBooksSearchResultsReceived){
+  isAllBooksSearchResultsReceived = allBooksSearchResultsReceived;
+  notifyListeners();
+}
   void setAllBooksSearchResultsPagesCount(int newPagesCount){
     allBooksSearchResultsPagesCount = newPagesCount;
     notifyListeners();

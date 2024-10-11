@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trial_flutter_web_app/api_connections.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
-import 'package:trial_flutter_web_app/reusableWidgets/Header.dart';
 import 'package:animated_book_widget/animated_book_widget.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
@@ -9,7 +8,7 @@ class BookDetailsWidget extends StatefulWidget {
   // static const routeName = "/bookDetails";
 
 Book bookModel;
-BookDetailsWidget({
+BookDetailsWidget({super.key, 
   required this.bookModel
 });
 
@@ -46,7 +45,7 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                             backgroundColor: Colors.white
                           ),
                           onPressed: (){}, 
-                        child: Text("بحث عن كلمات متتالية", style: TextStyle(color:Colors.black, fontWeight: FontWeight.bold, fontSize: 23))),
+                        child: const Text("بحث عن كلمات متتالية", style: TextStyle(color:Colors.black, fontWeight: FontWeight.bold, fontSize: 23))),
                       ),
                   
                        Padding(
@@ -125,7 +124,7 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                                 Container(
                                   margin: EdgeInsets.all(30),
                                   height: 500,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.transparent
                                   // color: Colors.white,
                                   // border: Border.all(
@@ -146,28 +145,28 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                                             Text('المؤلف: ${widget.bookModel.authorName ?? 'nan'}', 
                                             textDirection: TextDirection.rtl , 
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
+                                            style: const TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
                                         
                                             ),
                                             Text('الناشر: ${widget.bookModel.publisher ?? 'nan'}', textDirection: TextDirection.rtl ,
                                              textAlign: TextAlign.center,
             
-                                             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                                             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                                              ),
                                             Text('التاريخ: ${widget.bookModel.publicationYear ?? 'nan'}',
                                              textDirection: TextDirection.rtl,
                                               textAlign: TextAlign.center,
             
-                                             style: TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
+                                             style: const TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
                                              ),
                                             Text('عدد الصفحات: ${widget.bookModel.numOfPages ?? 'nan'}', 
                                             textDirection: TextDirection.rtl,
                                               textAlign: TextAlign.center,
             
-                                            style: TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
+                                            style: const TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
                                             ),
 
-                                            Divider(),
+                                            const Divider(),
 
                                             Center(
                                               child: RatingStars(
@@ -195,7 +194,7 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                                                             starSpacing: 2,
                                                             maxValueVisibility: true,
                                                             valueLabelVisibility: true,
-                                                            animationDuration: Duration(milliseconds: 1000),
+                                                            animationDuration: const Duration(milliseconds: 1000),
                                                             valueLabelPadding:
                                                                 const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
                                                             valueLabelMargin: const EdgeInsets.only(right: 8),
@@ -214,7 +213,7 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                                 ),
                               ],
                             ),
-                            size: Size(150, 500),
+                            size: const Size(150, 500),
                             
                           ),
                         ),

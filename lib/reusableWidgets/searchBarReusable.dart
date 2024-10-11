@@ -119,13 +119,17 @@ int allBooksSearchResultsBooksCount = 0;
                     
                                       },
                                       child: Column(
+                                      
                       children: [
                         Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             // SizedBox(width: MediaQuery.of(context).size.width *0.25,),
-                            Expanded(
+                            Flexible(
                               child: Padding(
-                                padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width *0.25),
+                                padding: widget.searchType == SearchType.AllBooksSearch?  EdgeInsets.only(right: MediaQuery.of(context).size.width *0.20,
+                                left: MediaQuery.of(context).size.width *0.08,
+                                ): EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width *0.25),
                                 child: SearchBar(
                                   onChanged: (value) async {
                                     if(widget.searchType == SearchType.SingleBookSearch){
@@ -149,6 +153,7 @@ int allBooksSearchResultsBooksCount = 0;
                                         provider.setAllBooksSearchResultsPagesCount(allBooksSearchResultsPagesCount);
                                         provider.setAllBooksSearchResultsBooksCount(allBooksSearchResultsBooksCount);
                                         provider.setAllBooksSearchResult(allBooksSearchResults);
+                                        provider.setAllBooksSearchResultsReceived(true);
 
 
                                       }
@@ -209,7 +214,13 @@ int allBooksSearchResultsBooksCount = 0;
                         ),
                         // SizedBox(width: MediaQuery.of(context).size.width * 0.26),
                       ],
-                    ) : Container()
+                    ) : isLoading == true?  Padding(
+                     padding: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width *0.10,
+                    //  top: MediaQuery.of(context).size.height *0.10
+                     ),
+                     child: Center(child: CircularProgressIndicator(color: Colors.white,),),
+                   ) : Container()
                     
                     
                     
