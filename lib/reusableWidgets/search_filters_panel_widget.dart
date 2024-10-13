@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trial_flutter_web_app/Providers/allBooksSearchResultProvider.dart';
 import 'package:trial_flutter_web_app/Providers/searchResultsProvider.dart';
 
 class SearchFiltersPanelWidget extends StatelessWidget {
@@ -7,7 +8,7 @@ class SearchFiltersPanelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<SearchResultsProvider>(context);
+    var provider = Provider.of<AllBooksSearchResultsProvider>(context);
     return Padding(
       padding:  EdgeInsets.only(
         left: MediaQuery.of(context).size.width * 0.02,

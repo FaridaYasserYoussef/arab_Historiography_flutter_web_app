@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trial_flutter_web_app/api_connections.dart';
+import 'package:trial_flutter_web_app/API/api_connections.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
 import 'package:animated_book_widget/animated_book_widget.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';

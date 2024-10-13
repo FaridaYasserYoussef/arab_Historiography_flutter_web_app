@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trial_flutter_web_app/API/SearchAPIService.dart';
+import 'package:trial_flutter_web_app/Providers/allBooksSearchResultProvider.dart';
+import 'package:trial_flutter_web_app/Providers/searchPaginationProvider.dart';
 import 'package:trial_flutter_web_app/Providers/searchResultsProvider.dart';
-import 'package:trial_flutter_web_app/api_connections.dart';
+import 'package:trial_flutter_web_app/API/api_connections.dart';
 import 'package:trial_flutter_web_app/enums/search_type.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
 import 'package:http/http.dart' as http;
@@ -21,87 +24,22 @@ SearchType searchType;
 }
 
 class _SearchBarReusableState extends State<SearchBarReusable> {
-  List<Book> searchResults = [];
-  List<Book> allBooksSearchResults = [];
+  // List<Book> searchResults = [];
+  // List<Book> allBooksSearchResults = [];
 
   bool searchBarFocus = false;
-  bool isLoading = false;
-  int allBooksSearchResultsPagesCount = 0;
-int allBooksSearchResultsBooksCount = 0;
+//   bool isLoading = false;
+//   int allBooksSearchResultsPagesCount = 0;
+// int allBooksSearchResultsBooksCount = 0;
   TextEditingController searchController = TextEditingController();
+  SearchAPIService searchService = SearchAPIService();
 
-  Future<List<Book>> getAllBooksSearchResults(String searchMode) async{
-    List<Book> _searchResults = [];
-    setState(() {
-      allBooksSearchResults = [];
-      isLoading = true;
-    });
-    var res = await http.post(
-      Uri.parse(API.allBooksSearch),
-      body: {
-        "searchString": searchController.text,
-        "searchType": searchMode
-      }
-    );
 
-    if(res.statusCode == 200){
-      var data = jsonDecode(res.body);
-      allBooksSearchResultsPagesCount = int.parse(data["pages_count"].toString());
-      allBooksSearchResultsBooksCount = int.parse(data["books_count"].toString());
-      List<Map<String, dynamic>> fetchedBooks = (data['results'] as List<dynamic>)
-        .map((item) => item as Map<String, dynamic>)
-        .toList();
-        // print(fetchedBooks);
-      for (var bookObject in fetchedBooks){
-        _searchResults.add(Book.fromSearchResultJson(bookObject));
-      }
-     
-  setState(() {
-    allBooksSearchResults = _searchResults;
-    isLoading = false;
-  });
-    }
-    return allBooksSearchResults;
-
-  }
-
-  Future<List<Book>> getBookSearchItems() async{
-    List<Book> _searchResults = [];
-    setState(() {
-      searchResults = [];
-      isLoading = true;
-    });
-    
-    var res = await http.post(
-      Uri.parse(API.searchBooksByName),
-      body: {
-        "book_title": searchController.text
-      }
-    );
-    
-
-    if(res.statusCode == 200){
-      var data = jsonDecode(res.body);
-      List<Map<String, dynamic>> fetchedBooks = (data['book_objects'] as List<dynamic>)
-        .map((item) => item as Map<String, dynamic>)
-        .toList();
-        // print(fetchedBooks);
-      for (var bookObject in fetchedBooks){
-        _searchResults.add(Book.fromSearchResultJson(bookObject));
-      }
-     
-  setState(() {
-    searchResults = _searchResults;
-    isLoading = false;
-  });
-    }
-   
-   return _searchResults;
-
-  }
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<SearchResultsProvider>(context);
+    var providerAllBooksSearch = Provider.of<AllBooksSearchResultsProvider>(context);
+    var providerSingleBookSearch = Provider.of<SingleBookSearchResultProvider>(context);
+    var providerPagination = Provider.of<SearchPaginationProvider>(context);
     return Container(
                       child: Directionality(
                               textDirection: TextDirection.rtl,
@@ -112,7 +50,8 @@ int allBooksSearchResultsBooksCount = 0;
                       setState(() {
                         searchBarFocus = false;
                         if(searchController.text.isEmpty){
-                        searchResults = [];
+                        // searchResults = [];
+                        providerSingleBookSearch.setSearchResults([]);
 
                         }
                       });
@@ -133,7 +72,12 @@ int allBooksSearchResultsBooksCount = 0;
                                 child: SearchBar(
                                   onChanged: (value) async {
                                     if(widget.searchType == SearchType.SingleBookSearch){
-                                    await getBookSearchItems();
+                                      providerSingleBookSearch.setBookTitle(searchController.text);
+                                    await searchService.getBookSearchItems(context);
+                                    }
+                                    else if(widget.searchType ==  SearchType.AllBooksSearch){
+                                      providerAllBooksSearch.setSearchString(searchController.text);
+                                      providerAllBooksSearch.setIsFirstRequest(true);
                                     }
                                    
                                   },
@@ -149,11 +93,13 @@ int allBooksSearchResultsBooksCount = 0;
                                   trailing: [
                                     IconButton(onPressed: () async{
                                       if(widget.searchType == SearchType.AllBooksSearch){
-                                        await getAllBooksSearchResults(provider.getAllBooksSearchMode);
-                                        provider.setAllBooksSearchResultsPagesCount(allBooksSearchResultsPagesCount);
-                                        provider.setAllBooksSearchResultsBooksCount(allBooksSearchResultsBooksCount);
-                                        provider.setAllBooksSearchResult(allBooksSearchResults);
-                                        provider.setAllBooksSearchResultsReceived(true);
+                                        providerPagination.setSelectedIndex(1);
+                                        
+                                        await searchService.getAllBooksSearchResults(context);
+                                        // providerAllBooksSearch.setAllBooksSearchResultsPagesCount(allBooksSearchResultsPagesCount);
+                                        // providerAllBooksSearch.setAllBooksSearchResultsBooksCount(allBooksSearchResultsBooksCount);
+                                        // providerAllBooksSearch.setAllBooksSearchResult(allBooksSearchResults);
+                                        // providerAllBooksSearch.setAllBooksSearchResultsReceived(true);
 
 
                                       }
@@ -172,11 +118,11 @@ int allBooksSearchResultsBooksCount = 0;
                       children: [
                         // SizedBox(width: MediaQuery.of(context).size.width * 0.26),
                         Expanded(
-                          child:  isLoading == true? const Padding(
+                          child:  providerSingleBookSearch.getIsLoading == true? const Padding(
                      padding: EdgeInsets.all(8.0),
                      child: Center(child: CircularProgressIndicator(color: Colors.white,),),
                    ) : Visibility(
-                            visible: searchResults.isNotEmpty && searchBarFocus ? true: false,
+                            visible: providerSingleBookSearch.getSearchResults.isNotEmpty && searchBarFocus ? true: false,
                             child: Padding(
                               padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width *0.26),
                               child: Container(
@@ -189,7 +135,7 @@ int allBooksSearchResultsBooksCount = 0;
                       padding:  EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01),
                       child: GestureDetector(
                         onTap: () {
-                          provider.selectSearchItem(searchResults[index]);
+                          providerSingleBookSearch.selectSearchItem(providerSingleBookSearch.getSearchResults[index]);
                           setState(() {
                             searchBarFocus = false;
                             
@@ -200,13 +146,13 @@ int allBooksSearchResultsBooksCount = 0;
                           
                         },
                         child: ListTile(
-                          title: Text(searchResults[index].title ?? 'nan', style: const TextStyle(color: Colors.white),),
-                          leading: searchResults[index].imagePath == null? const Icon(Icons.book) :  Image(image: NetworkImage(API.hostConnectMedia + searchResults[index].imagePath!)),
+                          title: Text(providerSingleBookSearch.getSearchResults[index].title ?? 'nan', style: const TextStyle(color: Colors.white),),
+                          leading: providerSingleBookSearch.getSearchResults[index].imagePath == null? const Icon(Icons.book) :  Image(image: NetworkImage(API.hostConnectMedia + providerSingleBookSearch.getSearchResults[index].imagePath!)),
                         ),
                       ),
                                       );
                                   },
-                                  itemCount: searchResults.length,
+                                  itemCount: providerSingleBookSearch.getSearchResults.length,
                                 ),
                               ),
                             ),
@@ -214,12 +160,12 @@ int allBooksSearchResultsBooksCount = 0;
                         ),
                         // SizedBox(width: MediaQuery.of(context).size.width * 0.26),
                       ],
-                    ) : isLoading == true?  Padding(
+                    ) : providerAllBooksSearch.getIsLoading == true?  Padding(
                      padding: EdgeInsets.only(
                       right: MediaQuery.of(context).size.width *0.10,
                     //  top: MediaQuery.of(context).size.height *0.10
                      ),
-                     child: Center(child: CircularProgressIndicator(color: Colors.white,),),
+                     child: Center(child: CircularProgressIndicator(color: Colors.white),),
                    ) : Container()
                     
                     

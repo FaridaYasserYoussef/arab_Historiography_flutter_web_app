@@ -1,14 +1,11 @@
-import 'dart:convert';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trial_flutter_web_app/Providers/searchResultsProvider.dart';
-import 'package:trial_flutter_web_app/api_connections.dart';
 import 'package:trial_flutter_web_app/enums/search_type.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
 import 'package:trial_flutter_web_app/reusableWidgets/Header.dart';
-import 'package:http/http.dart' as http;
 import 'package:trial_flutter_web_app/reusableWidgets/bookDetailsWidget.dart';
 import 'package:trial_flutter_web_app/reusableWidgets/searchBarReusable.dart';
 
@@ -25,7 +22,7 @@ class _SingleBookSearchScreenState extends State<SingleBookSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<SearchResultsProvider>(context);
+    var provider = Provider.of<SingleBookSearchResultProvider>(context);
     return Scaffold(
       backgroundColor: Color(0XFF26211C),
       appBar: Header(title: "البحث عن كتاب محدد",),

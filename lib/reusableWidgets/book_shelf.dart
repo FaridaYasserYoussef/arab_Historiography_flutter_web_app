@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
-import 'package:trial_flutter_web_app/reusableWidgets/book_shelf_item.dart';
+import 'package:trial_flutter_web_app/reusableWidgets/search_list_item.dart';
 
 class BookShelfWidget extends StatelessWidget {
   List<Book> booksInShelf;
@@ -28,7 +28,7 @@ class BookShelfWidget extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: booksInShelf.length,
           itemBuilder: (context, index){
-           return BookShelfItemWidget(bookModel: booksInShelf[index]);
+           return SearchListItemWidget(bookModel: booksInShelf[index]);
     
         }),
       ),
