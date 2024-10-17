@@ -42,6 +42,7 @@ dependencies:
   flutter_rating_stars: ^1.0.3+4
   provider: ^6.1.2
   get_it: ^8.0.0
+  hovering: ^1.0.4
 
 dev_dependencies:
   flutter_test:

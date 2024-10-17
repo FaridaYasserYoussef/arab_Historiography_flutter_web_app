@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trial_flutter_web_app/Screens/HomePage.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget{
 
@@ -57,7 +58,9 @@ Header({
           child: CircleAvatar(
             backgroundColor: const Color(0XFF383029),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, HomePage.routeName);
+              },
               icon: const Icon(Icons.home, color: Colors.white),
             ),
           ),

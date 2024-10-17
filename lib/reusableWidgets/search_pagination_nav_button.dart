@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hovering/hovering.dart';
 import 'package:provider/provider.dart';
 import 'package:trial_flutter_web_app/API/SearchAPIService.dart';
 import 'package:trial_flutter_web_app/Providers/searchPaginationProvider.dart';
@@ -34,10 +35,21 @@ class SearchPaginationNavigationButtonWidget extends StatelessWidget {
             }
           }
         },
-        child: CircleAvatar(
-          child: navigationType == SearchPaginationNavigationType.Next ? Icon(Icons.arrow_forward, color: Colors.black,): Icon(Icons.arrow_back, color: Colors.black,),
-          backgroundColor:  Color(0xFFa86f3b),
-          radius: MediaQuery.of(context).size.height *0.02,
+        child: HoverContainer(
+          hoverDecoration: BoxDecoration(
+            boxShadow: [
+                      BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 10,
+                      ),
+                    ],
+          ),
+          child: CircleAvatar(
+            child: navigationType == SearchPaginationNavigationType.Next ? Icon(Icons.arrow_forward, color: Colors.black,): Icon(Icons.arrow_back, color: Colors.black,),
+            backgroundColor:  Color(0xFFa86f3b),
+            radius: MediaQuery.of(context).size.height *0.02,
+          ),
         ),
       ),
     );

@@ -9,6 +9,7 @@ import 'package:trial_flutter_web_app/Screens/AISearchScreen.dart';
 import 'package:trial_flutter_web_app/Screens/allBooksSearchScreen.dart';
 import 'package:trial_flutter_web_app/Screens/singleBookSearchScreen.dart';
 import 'package:trial_flutter_web_app/Screens/timeSearchScreen.dart';
+import 'package:trial_flutter_web_app/Screens/view_detailed_search_results_screen.dart';
 
 void main() {
   runApp( MultiProvider(
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
        SingleBookSearchScreen.routeName : (context) => SingleBookSearchScreen(),
        AllBooksSearchScreen.routeName : (context) => AllBooksSearchScreen(),
        AISearchScreen.routeName:(context) => AISearchScreen(),
-       TimeSearchScreen.routeName :(context) => TimeSearchScreen()
+       TimeSearchScreen.routeName :(context) => TimeSearchScreen(),
       },
     );
   }

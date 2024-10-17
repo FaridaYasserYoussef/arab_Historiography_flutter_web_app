@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trial_flutter_web_app/API/api_connections.dart';
+import 'package:trial_flutter_web_app/Screens/view_detailed_search_results_screen.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
+import 'package:trial_flutter_web_app/reusableWidgets/animated_book_customized.dart';
 
 class SearchListItemWidget extends StatelessWidget {
   Book bookModel;
@@ -8,9 +10,13 @@ class SearchListItemWidget extends StatelessWidget {
   SearchListItemWidget({
     required this.bookModel,
   });
+  double numOfClicks = 0;
 
   @override
   Widget build(BuildContext context) {
+    // print(MediaQuery.of(context).size.height);
+    // print(MediaQuery.of(context).size.width);
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Padding(
@@ -18,34 +24,7 @@ class SearchListItemWidget extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        offset: Offset(4, 4),
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  child: bookModel.imagePath == null
-                      ? Image.asset(
-                          "assets/images/notAvailable.png",
-                          fit: BoxFit.fill,
-                          height: MediaQuery.of(context).size.height * 0.35,
-                          width: MediaQuery.of(context).size.width * 0.15,
-                        )
-                      : Image.network(
-                          API.hostConnectMedia + bookModel.imagePath!,
-                          fit: BoxFit.fill,
-                          height: MediaQuery.of(context).size.height * 0.35,
-                          width: MediaQuery.of(context).size.width * 0.15,
-                        ),
-                ),
-              ),
+              child: AnimatedBookCustomized(bookModel: bookModel, width:242, height: 350,)
             ),
             Expanded(
               flex: 3,
@@ -55,19 +34,19 @@ class SearchListItemWidget extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.35,
                   width: MediaQuery.of(context).size.width * 0.60,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/newbg2.jpg"),
-                      repeat: ImageRepeat.repeat,
-                    ),
-                    color: Colors.brown,
+                    // image: DecorationImage(
+                      // image: AssetImage("assets/images/newbg2.jpg"),
+                      // repeat: ImageRepeat.repeat,
+                    // ),
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        offset: Offset(4, 4),
-                        blurRadius: 10,
-                      ),
-                    ],
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.black,
+                    //     offset: Offset(4, 4),
+                    //     blurRadius: 10,
+                    //   ),
+                    // ],
                   ),
                   child: Center(
                     child: Padding(
@@ -76,56 +55,60 @@ class SearchListItemWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(
-                            'العنوان: ${bookModel.title ?? 'nan'}',
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            'المؤلف: ${bookModel.authorName ?? 'nan'}',
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            'الناشر: ${bookModel.publisher ?? 'nan'}',
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            'التاريخ: ${bookModel.publicationYear ?? 'nan'}',
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            'عدد الصفحات: ${bookModel.numOfPages ?? 'nan'}',
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
+                          IconButton(onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewDetailedSearchResultsScreen(bookModel: bookModel)));
+                            
+                          }, icon: Icon(Icons.arrow_forward_ios, color: Colors.white,))
+                          // Text(
+                          //   'العنوان: ${bookModel.title ?? 'nan'}',
+                          //   textDirection: TextDirection.rtl,
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //     fontSize: 20,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   'المؤلف: ${bookModel.authorName ?? 'nan'}',
+                          //   textDirection: TextDirection.rtl,
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //     fontSize: 20,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   'الناشر: ${bookModel.publisher ?? 'nan'}',
+                          //   textDirection: TextDirection.rtl,
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //     fontSize: 20,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   'التاريخ: ${bookModel.publicationYear ?? 'nan'}',
+                          //   textDirection: TextDirection.rtl,
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //     fontSize: 20,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   'عدد الصفحات: ${bookModel.numOfPages ?? 'nan'}',
+                          //   textDirection: TextDirection.rtl,
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //     fontSize: 20,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
