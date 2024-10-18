@@ -13,7 +13,7 @@ class Book{
   int? authoringYear;
   String? authorOrigin;
   int? imageID;
-  List<Page>? pages;
+  List<BookPage>? pages;
   // Uint8List? imageData;
 
   Book({
@@ -44,7 +44,7 @@ this.pages
      authorOrigin: json['authorOrigin'].toString() == 'nan'? null: json['authorOrigin'].toString(),
      imageID: json['imageID'].toString() == 'nan'? null: int.parse(json['imageID'].toString()),
     pages: (json['pages'] as List<dynamic>).isEmpty? null:  (json['pages'] as List<dynamic>).map((item){
-      return Page.fromJson((item as Map<String, dynamic>));
+      return BookPage.fromJson((item as Map<String, dynamic>));
     }).toList()
 
   

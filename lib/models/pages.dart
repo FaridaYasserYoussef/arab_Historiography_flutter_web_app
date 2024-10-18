@@ -1,12 +1,12 @@
-class Page{
+class BookPage{
   int pageNumber;
   String text;
-  Page({
+  BookPage({
     required this.pageNumber,
     required this.text
   });
 
-  factory Page.fromJson(Map<String, dynamic> json) => Page(
+  factory BookPage.fromJson(Map<String, dynamic> json) => BookPage(
     pageNumber: int.parse(json["pageNumber"].toString()), 
     text: json["text"].toString()
     );
