@@ -6,10 +6,12 @@ class BookDetailsPageWidget extends StatefulWidget {
   double height;
   double width;
   Book bookModel;
+  double fontSize;
    BookDetailsPageWidget({
     required this.height,
     required this.width,
     required this.bookModel,
+    required this.fontSize,
     super.key});
 
   @override
@@ -53,28 +55,34 @@ class _BookDetailsPageWidgetState extends State<BookDetailsPageWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
+                            Text('العنوان: ${widget.bookModel.title ?? 'nan'}', 
+                            textDirection: TextDirection.rtl , 
+                            textAlign: TextAlign.center,
+                            style:  TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: widget.fontSize),
+                        
+                            ),
                             Text('المؤلف: ${widget.bookModel.authorName ?? 'nan'}', 
                             textDirection: TextDirection.rtl , 
                             textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
+                            style:  TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: widget.fontSize),
                         
                             ),
                             Text('الناشر: ${widget.bookModel.publisher ?? 'nan'}', textDirection: TextDirection.rtl ,
                              textAlign: TextAlign.center,
           
-                             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                             style:  TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: widget.fontSize),
                              ),
                             Text('التاريخ: ${widget.bookModel.publicationYear ?? 'nan'}',
                              textDirection: TextDirection.rtl,
                               textAlign: TextAlign.center,
           
-                             style: const TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
+                             style:  TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: widget.fontSize),
                              ),
                             Text('عدد الصفحات: ${widget.bookModel.numOfPages ?? 'nan'}', 
                             textDirection: TextDirection.rtl,
                               textAlign: TextAlign.center,
           
-                            style: const TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: 18),
+                            style:  TextStyle(color: Colors.black , fontWeight: FontWeight.bold, fontSize: widget.fontSize),
                             ),
     
                             const Divider(),

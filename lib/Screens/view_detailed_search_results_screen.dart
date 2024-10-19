@@ -36,6 +36,7 @@ class _ViewDetailedSearchResultsScreenState extends State<ViewDetailedSearchResu
               Expanded(flex: 3, child: SizedBox()),
               Expanded(flex:3,  
               child: AnimatedBookCustomized(
+                fontSize: 18,
                 bookModel: widget.bookModel, 
                 width:622, 
                 height: 600,
@@ -43,9 +44,23 @@ class _ViewDetailedSearchResultsScreenState extends State<ViewDetailedSearchResu
         key: _controller,
         backgroundColor: Colors.white,
         // isRightSwipe: true,
-        // lastPage: Container(color: Colors.white, child: const Center(child: Text('Last Page!'))),
+        lastPage: Transform.rotate(
+          angle: 3.14159,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            Text("الرجوع لنتائج البحث", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: CircleAvatar(backgroundColor: Colors.blue,
+              child: Icon(Icons.arrow_back, color: Colors.white,),
+              ),
+            )
+          ],)),
         children: <Widget>[
-          BookDetailsPageWidget(height: 600, width: 622, bookModel: widget.bookModel),
+          BookDetailsPageWidget(height: 600, width: 622, bookModel: widget.bookModel, fontSize: 18,),
           for (BookPage page in widget.bookModel.pages!) SearchResultPageWidget(page: page),
         ],
       ),

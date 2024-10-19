@@ -61,12 +61,11 @@ class AllBooksSearchScreen
                   top: MediaQuery.of(context).size.height * 0.03,
                   ),
                   child: DropdownButton<String>(
-                    style: TextStyle(color: Colors.black),
+                    dropdownColor: Colors.black,
+                    style: TextStyle(color: Colors.white),
                     value: provider.getAllBooksSearchMode,
                     items: const [
-                      DropdownMenuItem(
-                      
-                        value: "match_phrase",child: Text("كلمات متتالية", style: TextStyle(color: Colors.white),),),
+                      DropdownMenuItem(value: "match_phrase",child: Text("كلمات متتالية", style: TextStyle(color: Colors.white),),),
                       DropdownMenuItem(value: "same_page",child: Text("كلمات في نفس الصفحة", style: TextStyle(color: Colors.white),),),
                       DropdownMenuItem(value: "match_word",child: Text("بحث حر", style: TextStyle(color: Colors.white),),),
                     ], 

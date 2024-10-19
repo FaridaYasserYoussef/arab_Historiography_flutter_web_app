@@ -11,10 +11,12 @@ class AnimatedBookCustomized extends StatefulWidget {
   double width;
   double height;
   Widget? content;
+  double fontSize;
   AnimatedBookCustomized({
     required this.bookModel,
     required this.width,
     required this.height,
+    required this.fontSize,
     this.content
   });
   
@@ -45,17 +47,17 @@ class _AnimatedBookCustomizedState extends State<AnimatedBookCustomized> {
                 image:  AssetImage("assets/images/pageBackground.jpg"), fit: BoxFit.fill,) :Image(
                 height: MediaQuery.of(context).size.height * (widget.height/740),
                 image: widget.bookModel.imagePath == null
-      ? Image.asset(
+      ?  AssetImage(
           "assets/images/notAvailable.png",
-          fit: BoxFit.fill,
-          height: MediaQuery.of(context).size.height *(widget.height/740),
-          width: MediaQuery.of(context).size.width  *(widget.width/1528),
+          // fit: BoxFit.fill,
+          // height: MediaQuery.of(context).size.height *(widget.height/740),
+          // width: MediaQuery.of(context).size.width  *(widget.width/1528),
         ) as ImageProvider
-      :  NetworkImage(API.hostConnectMedia + widget.bookModel.imagePath!), fit: BoxFit.fill,)
+      :  NetworkImage(API.hostConnectMedia + widget.bookModel.imagePath!) , fit: BoxFit.fill,) 
                 
                 ),
             ),
-            content: widget.content == null ?  BookDetailsPageWidget(height: widget.height, width: widget.width, bookModel: widget.bookModel): widget.content!,
+            content: widget.content == null ?  BookDetailsPageWidget(height: widget.height, width: widget.width, bookModel: widget.bookModel, fontSize: widget.fontSize,): widget.content!,
             size:  Size(MediaQuery.of(context).size.width * (widget.width/1528), MediaQuery.of(context).size.height * (widget.height/740)),
             
           ),

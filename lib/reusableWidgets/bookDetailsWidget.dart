@@ -87,7 +87,7 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
             Expanded(
               child: Padding(
       padding: EdgeInsets.only(right:  MediaQuery.of(context).size.width *0.07,left: MediaQuery.of(context).size.width *0.20, top: MediaQuery.of(context).size.height *0.15, bottom: MediaQuery.of(context).size.height *0.2 ),
-                child: AnimatedBookCustomized(bookModel: widget.bookModel, width: 150, height: 500),
+                child: AnimatedBookCustomized(bookModel: widget.bookModel, width: 150, height: 500, fontSize: 18,),
               )
             ),
           ],
