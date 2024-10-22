@@ -27,11 +27,11 @@ class _ViewDetailedSearchResultsScreenState extends State<ViewDetailedSearchResu
     return  Scaffold(
       appBar: Header(),
       backgroundColor: Color(0XFF26211C),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          SizedBox(height: MediaQuery.of(context).size.height *0.2,),
-          
-          Row(
+      body: Column(children: [
+        // SizedBox(height: MediaQuery.of(context).size.height *0.2,),
+        
+        Expanded(
+          child: Row(
             children: [
               Expanded(flex: 3, child: SizedBox()),
               Expanded(flex:3,  
@@ -41,10 +41,10 @@ class _ViewDetailedSearchResultsScreenState extends State<ViewDetailedSearchResu
                 width:622, 
                 height: 600,
                 content:  PageFlipWidget(
-        key: _controller,
-        backgroundColor: Colors.white,
-        // isRightSwipe: true,
-        lastPage: Transform.rotate(
+              key: _controller,
+              backgroundColor: Colors.white,
+              // isRightSwipe: true,
+              lastPage: Transform.rotate(
           angle: 3.14159,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -59,18 +59,18 @@ class _ViewDetailedSearchResultsScreenState extends State<ViewDetailedSearchResu
               ),
             )
           ],)),
-        children: <Widget>[
+              children: <Widget>[
           BookDetailsPageWidget(height: 600, width: 622, bookModel: widget.bookModel, fontSize: 18,),
           for (BookPage page in widget.bookModel.pages!) SearchResultPageWidget(page: page),
-        ],
-      ),
+              ],
+              ),
                 )),
               Expanded(flex: 3,  child: SizedBox())
             ],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height *0.2,),
-        ]),
-      ),
+        ),
+        // SizedBox(height: MediaQuery.of(context).size.height *0.2,),
+      ]),
 
     );
   }
