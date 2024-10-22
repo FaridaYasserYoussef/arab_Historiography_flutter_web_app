@@ -5,7 +5,7 @@ import 'package:trial_flutter_web_app/API/api_connections.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
 import 'package:hovering/hovering.dart';
 import 'package:trial_flutter_web_app/reusableWidgets/book_details_page_widget.dart';
-
+// import 'package:image/image.dart' as;
 class AnimatedBookCustomized extends StatefulWidget {
   Book bookModel;
   double width;
@@ -29,6 +29,8 @@ class _AnimatedBookCustomizedState extends State<AnimatedBookCustomized> {
 
   @override
   Widget build(BuildContext context) {
+    print("title: ${widget.bookModel.title} , image path: ${widget.bookModel.imagePath}");
+
     return Container(
       width: double.infinity,
       child: Container(

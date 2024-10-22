@@ -13,7 +13,7 @@ Header({
   @override
   Widget build(BuildContext context) {
     return  AppBar(
-      leadingWidth: 90,
+      leadingWidth: MediaQuery.of(context).size.width *0.60,
       toolbarHeight: 100,
       centerTitle: true,
       title: Text(title ?? '',
@@ -24,14 +24,16 @@ Header({
                 )
       ),
       backgroundColor: Color(0XFF26211C),
-      leading: 
-      ImageIcon(
+      leading: Row(children: [
+        ImageIcon(
         const AssetImage("assets/images/logo.png",
          
         ),
         color: Colors.white,
         size: MediaQuery.of(context).size.height * 0.25,
       ),
+      Text("Arab Historiography", style: TextStyle(color: Colors.white, fontSize: 30),)
+      ]),
       actions: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.008),
