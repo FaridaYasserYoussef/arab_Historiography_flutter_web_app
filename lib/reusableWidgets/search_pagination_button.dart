@@ -19,7 +19,7 @@ class SearchPaginationButtonWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: () async{
           provider.setSelectedIndex(index);
-          await searchAPIService.getAllBooksSearchResults(context);
+          await searchAPIService.getAllBooksSearchResults();
         },
         child: HoverContainer(
           hoverDecoration: BoxDecoration(

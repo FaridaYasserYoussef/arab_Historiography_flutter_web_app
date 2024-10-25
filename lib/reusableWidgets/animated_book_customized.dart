@@ -29,7 +29,7 @@ class _AnimatedBookCustomizedState extends State<AnimatedBookCustomized> {
 
   @override
   Widget build(BuildContext context) {
-    print("title: ${widget.bookModel.title} , image path: ${widget.bookModel.imagePath}");
+    // print("title: ${widget.bookModel.title} , image path: ${widget.bookModel.imagePath}");
 
     return Container(
       width: double.infinity,

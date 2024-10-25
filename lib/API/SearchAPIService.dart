@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trial_flutter_web_app/API/api_connections.dart';
 import 'package:trial_flutter_web_app/Providers/allBooksSearchResultProvider.dart';
+import 'package:trial_flutter_web_app/Providers/requestTokensProvider.dart';
 import 'package:trial_flutter_web_app/Providers/searchPaginationProvider.dart';
 import 'package:trial_flutter_web_app/Providers/searchResultsProvider.dart';
 import 'package:trial_flutter_web_app/models/book.dart';
 import 'package:http/http.dart' as http;
+import 'dart:math';
+
 
 
 class SearchAPIService{
@@ -18,43 +21,120 @@ class SearchAPIService{
    }
    SearchAPIService._internal();
 
-    Future<List<Book>> getAllBooksSearchResults(BuildContext context) async{
+   Future<void> getAllBooksCount()async {
+    var requestProvider = RequestTokenProvider();
+    var paginationProvider = SearchPaginationProvider();
+    var provider = AllBooksSearchResultsProvider();
+    int from  = (paginationProvider.getSelectedIndex - 1) * 10;
+
+
+    if(paginationProvider.getIsAllBooksCountLoading == false){
+      requestProvider.setCurrentTotalBooksCancelToken(generateRandomString(10));
+      paginationProvider.setIsAllBooksCountLoading(true);
+
+    }else if(paginationProvider.getIsAllBooksCountLoading == true){
+      paginationProvider.setReceiveAllBooksCount(false);
+      paginationProvider.setIsAllBooksCountLoading(false);
+      // requestProvider.setPreviousTotalBooksCancelToken(requestProvider.getCurrentTotalBooksCancelToken);
+      requestProvider.setCurrentTotalBooksCancelToken(generateRandomString(10));
+
+    }
+      var res = await http.post(
+      Uri.parse(API.getAllBooksCount),
+      body: {
+        "isFirstRequest": provider.getIsFirstRequest == true ? "true": "false",
+        "from": from.toString(),
+        "searchString": provider.getSearchString,
+        "searchType": provider.getAllBooksSearchMode,
+        "getAllBooksCount": "true",
+        "cancelToken": requestProvider.getCurrentTotalBooksCancelToken
+        // "scroll_id": paginationProvider.get_scroll_id
+      }
+    );
+
+    if(res.statusCode == 200){
+      var data = jsonDecode(res.body);
+      if(data["cancelToken"] == requestProvider.getPreviousTotalBooksCancelToken){
+        return;
+      }else{
+      paginationProvider.setIsAllBooksCountLoading(false);
+      provider.setTotalBooksCount(data["allBooksCount"]);
+      return;
+
+      }
+
+    }
+
+
+
+   }
+
+    Future<List<Book>> getAllBooksSearchResults() async{
+    var requestProvider = RequestTokenProvider();
     List<Book> _searchResults = [];
     var provider = AllBooksSearchResultsProvider();
     var paginationProvider = SearchPaginationProvider();
+  
     int from  = (paginationProvider.getSelectedIndex - 1) * 10;
     provider.setAllBooksSearchResult([]);
     print("from is $from and first request is ${provider.getIsFirstRequest}");
     if(from == 0 && provider.getIsFirstRequest == true){
+        provider.setTotalBooksCount(0);
+        if(paginationProvider.getIsAllBooksCountLoading){
+      paginationProvider.setIsAllBooksCountLoading(false);
+      requestProvider.setPreviousTotalBooksCancelToken(requestProvider.getCurrentTotalBooksCancelToken);
+
+    }
     provider.setIsLoading(true);
     }
     else{
       provider.setIsLoadingInAllBooksPage(true);
     }
     
+
     // setState(() {
     //   allBooksSearchResults = [];
     //   isLoading = true;
     // });
     
+  DateTime startTime = DateTime.now();
+  print("Request started at: $startTime");
+
     var res = await http.post(
       Uri.parse(API.allBooksSearch),
       body: {
         "isFirstRequest": provider.getIsFirstRequest == true ? "true": "false",
         "from": from.toString(),
         "searchString": provider.getSearchString,
-        "searchType": provider.getAllBooksSearchMode
+        "searchType": provider.getAllBooksSearchMode,
+        "getAllBooksCount": "false",
+        // "cancelToken": requestProvider.getCurrentTotalBooksCancelToken
+        // "scroll_id": paginationProvider.get_scroll_id
       }
     );
 
     if(res.statusCode == 200){
       var data = jsonDecode(res.body);
+      // if(getAllBooksCount == true){ // also check if receive all books count flag is true
+      // if(paginationProvider.getReceiveAllBooksCount== false){
+      //     print("el total el 2adeem geh w mayenfa3sh 2a5do w howa ${data["allBooksCount"]}");
+      //     paginationProvider.setReceiveAllBooksCount(true);
+      //     provider.setTotalBooksCount(0);
+      //     return [];
+      // }else{
+      //   print("all books total is ${data["allBooksCount"]}");
+      //   provider.setTotalBooksCount(int.parse(data["allBooksCount"].toString()));
+      //   paginationProvider.setIsAllBooksCountLoading(false);
+      //   return [];
+      // }
+      // }
       if(from == 0 && provider.getIsFirstRequest == true){
          int allBooksSearchResultsPagesCount = int.parse(data["pages_count"].toString());
+      paginationProvider.setScrollId(data["scroll_id"].toString());
       provider.setAllBooksSearchResultsPagesCount(allBooksSearchResultsPagesCount);
       int allBooksSearchResultsBooksCount = int.parse(data["books_count"].toString());
       provider.setAllBooksSearchResultsBooksCount(allBooksSearchResultsBooksCount);
-      paginationProvider.setNumOfPages((allBooksSearchResultsBooksCount/10).ceil());
+      paginationProvider.setNumOfPages((allBooksSearchResultsPagesCount/10).ceil());
 
       }
       List<Map<String, dynamic>> fetchedBooks = (data['results'] as List<dynamic>)
@@ -77,11 +157,33 @@ class SearchAPIService{
     provider.setIsFirstRequest(false);
 
     }
+
+      DateTime endTime = DateTime.now();
+  // print("Request received at: $endTime");
+
+  // Calculate and print the elapsed time
+  Duration elapsedTime = endTime.difference(startTime);
+  print("Time elapsed: ${elapsedTime.inMilliseconds} ms");
+
     return _searchResults;
 
   }
 
-  Future<List<Book>> getBookSearchItems(BuildContext context) async{
+  String generateRandomString(int length) {
+  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  Random random = Random();
+
+  return String.fromCharCodes(
+    Iterable.generate(
+      length,
+      (_) => characters.codeUnitAt(random.nextInt(characters.length)),
+    ),
+  );
+}
+
+
+
+  Future<List<Book>> getBookSearchItems() async{
     List<Book> _searchResults = [];
     var provider = SingleBookSearchResultProvider();
     // setState(() {

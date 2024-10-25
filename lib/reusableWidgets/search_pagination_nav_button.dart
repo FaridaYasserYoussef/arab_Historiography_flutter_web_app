@@ -24,14 +24,14 @@ class SearchPaginationNavigationButtonWidget extends StatelessWidget {
             if(provider.getSelectedIndex < provider.numOfPages){
               int newIndex = provider.getSelectedIndex + 1;
               provider.setSelectedIndex(newIndex);
-              await searchAPIService.getAllBooksSearchResults(context);
+              await searchAPIService.getAllBooksSearchResults();
             }
           }
           else if(navigationType == SearchPaginationNavigationType.Previous){
               if(provider.getSelectedIndex > 1){
               int newIndex = provider.getSelectedIndex -1;
               provider.setSelectedIndex(newIndex);
-              await searchAPIService.getAllBooksSearchResults(context);
+              await searchAPIService.getAllBooksSearchResults();
             }
           }
         },

@@ -73,10 +73,10 @@ class _SearchBarReusableState extends State<SearchBarReusable> {
                                   onChanged: (value) async {
                                     if(widget.searchType == SearchType.SingleBookSearch){
                                       providerSingleBookSearch.setBookTitle(searchController.text);
-                                    await searchService.getBookSearchItems(context);
+                                    await searchService.getBookSearchItems();
                                     }
                                     else if(widget.searchType ==  SearchType.AllBooksSearch){
-                                      providerAllBooksSearch.setSearchString(searchController.text);
+                                      // providerAllBooksSearch.setSearchString(searchController.text);
                                       providerAllBooksSearch.setIsFirstRequest(true);
                                     }
                                    
@@ -93,9 +93,10 @@ class _SearchBarReusableState extends State<SearchBarReusable> {
                                   trailing: [
                                     IconButton(onPressed: () async{
                                       if(widget.searchType == SearchType.AllBooksSearch){
+                                        providerAllBooksSearch.setSearchString(searchController.text);
                                         providerPagination.setSelectedIndex(1);
                                         
-                                        await searchService.getAllBooksSearchResults(context);
+                                        await searchService.getAllBooksSearchResults();
                                         // providerAllBooksSearch.setAllBooksSearchResultsPagesCount(allBooksSearchResultsPagesCount);
                                         // providerAllBooksSearch.setAllBooksSearchResultsBooksCount(allBooksSearchResultsBooksCount);
                                         // providerAllBooksSearch.setAllBooksSearchResult(allBooksSearchResults);

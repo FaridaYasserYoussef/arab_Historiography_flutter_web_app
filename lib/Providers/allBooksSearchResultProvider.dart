@@ -30,7 +30,8 @@ bool get getIsLoading =>isLoading;
 
  bool isLoadingInAllBooksPage = false;
 bool get getIsLoadingInAllBooksPage =>isLoadingInAllBooksPage;
-
+int totalBooksCount =0;
+int get getTotalBooksCount => totalBooksCount;
 
 
 void setAllBooksSearchResultsReceived(bool allBooksSearchResultsReceived){
@@ -72,6 +73,11 @@ void setAllBooksSearchResultsReceived(bool allBooksSearchResultsReceived){
 
   void setIsLoadingInAllBooksPage(bool newIsLoading){
     isLoadingInAllBooksPage = newIsLoading;
+    notifyListeners();
+  }
+
+  void setTotalBooksCount(int newTotalBooksCount){
+    totalBooksCount = newTotalBooksCount;
     notifyListeners();
   }
 

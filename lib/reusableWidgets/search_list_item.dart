@@ -24,7 +24,7 @@ class SearchListItemWidget extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: AnimatedBookCustomized(bookModel: bookModel, width:233, height: 332, fontSize: 10,)
+              child: AnimatedBookCustomized(bookModel: bookModel, width:200, height: 332, fontSize: 10,)
             ),
             Expanded(
               flex: 3,

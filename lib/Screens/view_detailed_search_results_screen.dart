@@ -23,7 +23,7 @@ class _ViewDetailedSearchResultsScreenState extends State<ViewDetailedSearchResu
 
   @override
   Widget build(BuildContext context) {
-    print("The number of pages Received is ${widget.bookModel.pages!.length}");
+    // print("The number of pages Received is ${widget.bookModel.pages!.length}");
     return  Scaffold(
       appBar: Header(),
       backgroundColor: Color(0XFF26211C),

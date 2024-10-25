@@ -131,12 +131,12 @@ class AllBooksSearchScreen
                        ),
 
                        Expanded(flex: 2,  child: Container(
-                                                                  height: MediaQuery.of(context).size.height * 1.7,
-
+                        height: MediaQuery.of(context).size.height * 1.7,
                         child: SearchFiltersPanelWidget()))
 
             
-                      ],),
+                      ],
+                      ),
 
                       Center(
                         child: Visibility(
@@ -146,7 +146,8 @@ class AllBooksSearchScreen
                   ],
                 ),
               ),
-            ))
+            )
+            )
           ],
         ),
       ),

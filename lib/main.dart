@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trial_flutter_web_app/Providers/allBooksSearchResultProvider.dart';
+import 'package:trial_flutter_web_app/Providers/requestTokensProvider.dart';
 // import 'package:trial_flutter_web_app/HomePage.dart';
 import 'package:trial_flutter_web_app/Screens/HomePage.dart';
 import 'package:trial_flutter_web_app/Providers/searchPaginationProvider.dart';
@@ -17,6 +18,7 @@ void main() {
       ChangeNotifierProvider<SingleBookSearchResultProvider>(create: (_)=> SingleBookSearchResultProvider()),
       ChangeNotifierProvider<AllBooksSearchResultsProvider>(create: (_)=>AllBooksSearchResultsProvider(),),
       ChangeNotifierProvider<SearchPaginationProvider>(create: (_) => SearchPaginationProvider(),),
+      ChangeNotifierProvider<RequestTokenProvider>(create: (_)=>RequestTokenProvider())
     ],
     
     child: MyApp(),

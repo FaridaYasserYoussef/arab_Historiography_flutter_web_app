@@ -46,6 +46,7 @@ dependencies:
   page_flip: ^0.2.3
   flutter_widget_from_html: ^0.14.11
   image: ^4.3.0
+  cancellation_token_http: ^2.0.0
 
 dev_dependencies:
   flutter_test:

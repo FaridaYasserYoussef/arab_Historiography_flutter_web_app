@@ -8,7 +8,7 @@ class SearchResultPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("page text is ${page.text}");
+    // print("page text is ${page.text}");
     return Transform.rotate(
       angle: 3.14159,
       child: SingleChildScrollView(
@@ -16,13 +16,16 @@ class SearchResultPageWidget extends StatelessWidget {
           children: [
             Padding(
               padding:  EdgeInsets.all(MediaQuery.of(context).size.height*0.05),
-              child: HtmlWidget(''' ${page.text} ''',
-               customStylesBuilder: (element) {
-                      if (element.localName == 'em') {
-              return {
-                'color': 'blue'
-              };
-                      }},
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: HtmlWidget(''' ${page.text} ''',
+                 customStylesBuilder: (element) {
+                        if (element.localName == 'em') {
+                return {
+                  'color': 'blue'
+                };
+                        }},
+                ),
               ),
             ),
             CircleAvatar(child: Text(page.pageNumber.toString()),)

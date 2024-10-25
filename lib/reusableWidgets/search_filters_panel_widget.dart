@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trial_flutter_web_app/API/SearchAPIService.dart';
 import 'package:trial_flutter_web_app/Providers/allBooksSearchResultProvider.dart';
+import 'package:trial_flutter_web_app/Providers/searchPaginationProvider.dart';
 import 'package:trial_flutter_web_app/Providers/searchResultsProvider.dart';
 
 class SearchFiltersPanelWidget extends StatelessWidget {
-  const SearchFiltersPanelWidget({super.key});
-
+   SearchFiltersPanelWidget({super.key});
+SearchAPIService searchAPIService = SearchAPIService();
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AllBooksSearchResultsProvider>(context);
+    var paginationProvider = Provider.of<SearchPaginationProvider>(context);
     return Padding(
       padding:  EdgeInsets.only(
         left: MediaQuery.of(context).size.width * 0.02,
@@ -20,7 +23,9 @@ class SearchFiltersPanelWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text("نتائج البحث: ${provider.getAllBooksSearchResultsBooksCount} كتاب - ${provider.getAllBooksSearchResultsPagesCount} صفحة",
+                        // Text("نتائج البحث: ${provider.getAllBooksSearchResultsBooksCount} كتاب - ${provider.getAllBooksSearchResultsPagesCount} صفحة",
+
+            Text("نتائج البحث: ${provider.getAllBooksSearchResultsPagesCount} صفحة",
             style: TextStyle(fontSize: 20, color: Colors.white), textDirection: TextDirection.rtl,
             ),
      DropdownButton<String>(
@@ -81,11 +86,24 @@ class SearchFiltersPanelWidget extends StatelessWidget {
                     ], 
                     onChanged: (value){
                 
-                    }))
+                    })
+                    )
     
                 
                       ],
-                    )
+                    ),
+                paginationProvider.getIsAllBooksCountLoading == true? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(color: Colors.white),
+                  ),
+                ):
+                    Visibility(
+                      visible: provider.getTotalBooksCount != 0,
+                      child: Text(provider.getTotalBooksCount.toString() + " عدد الكتب", style: TextStyle(color: Colors.white, fontSize: 25,),textAlign: TextAlign.right,)),
+                      ElevatedButton(onPressed:provider.getTotalBooksCount != 0? null: (){
+                          searchAPIService.getAllBooksCount();
+                      }, child: Text("مجموع الكتب"))
           ],
         ),
       ),
