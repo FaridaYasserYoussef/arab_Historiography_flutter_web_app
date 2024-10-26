@@ -12,12 +12,14 @@ class AnimatedBookCustomized extends StatefulWidget {
   double height;
   Widget? content;
   double fontSize;
-  AnimatedBookCustomized({
+  bool inSearchList;
+  AnimatedBookCustomized({super.key, 
     required this.bookModel,
     required this.width,
     required this.height,
     required this.fontSize,
-    this.content
+    this.content,
+    this.inSearchList= false
   });
   
 
@@ -59,7 +61,7 @@ class _AnimatedBookCustomizedState extends State<AnimatedBookCustomized> {
                 
                 ),
             ),
-            content: widget.content == null ?  BookDetailsPageWidget(height: widget.height, width: widget.width, bookModel: widget.bookModel, fontSize: widget.fontSize,): widget.content!,
+            content: widget.content == null ?  BookDetailsPageWidget(height: widget.height, width: widget.width, bookModel: widget.bookModel, fontSize: widget.fontSize, inSearchList: widget.inSearchList,): widget.content!,
             size:  Size(MediaQuery.of(context).size.width * (widget.width/1528), MediaQuery.of(context).size.height * (widget.height/740)),
             
           ),

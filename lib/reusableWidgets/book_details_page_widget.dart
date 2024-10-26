@@ -7,11 +7,13 @@ class BookDetailsPageWidget extends StatefulWidget {
   double width;
   Book bookModel;
   double fontSize;
+  bool inSearchList;
    BookDetailsPageWidget({
     required this.height,
     required this.width,
     required this.bookModel,
     required this.fontSize,
+    this.inSearchList = false,
     super.key});
 
   @override
@@ -112,7 +114,7 @@ class _BookDetailsPageWidgetState extends State<BookDetailsPageWidget> {
                                             maxValue: 5,
                                             starSpacing: 2,
                                             maxValueVisibility: true,
-                                            valueLabelVisibility: true,
+                                            valueLabelVisibility: widget.inSearchList == false?  true: false,
                                             animationDuration: const Duration(milliseconds: 1000),
                                             valueLabelPadding:
                                                 const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
