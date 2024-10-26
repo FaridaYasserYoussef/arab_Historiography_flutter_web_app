@@ -9,6 +9,7 @@ class API{
   static const hostConnectSearch = "$hostConnect/search";
   static const searchBooks = "$hostConnectSearch/search_books/";
   static const allBooksSearch = "$hostConnectSearch/all_books_search/";
+  static const allBooksSearchScroll ="$hostConnectSearch/all_books_search_scroll_api/";
   static const searchBooksByName = "$hostConnectSearch/search_books_by_name/";
   static const getAllBooksCount ="$hostConnectSearch/get_total_book_count/";
 static const hostConnectMedia = "$hostConnect/media/";

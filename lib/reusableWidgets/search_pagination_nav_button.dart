@@ -25,6 +25,8 @@ class SearchPaginationNavigationButtonWidget extends StatelessWidget {
               int newIndex = provider.getSelectedIndex + 1;
               provider.setSelectedIndex(newIndex);
               await searchAPIService.getAllBooksSearchResults();
+              // await searchAPIService.getAllBooksSearchResultsScroll();
+
             }
           }
           else if(navigationType == SearchPaginationNavigationType.Previous){
@@ -32,6 +34,7 @@ class SearchPaginationNavigationButtonWidget extends StatelessWidget {
               int newIndex = provider.getSelectedIndex -1;
               provider.setSelectedIndex(newIndex);
               await searchAPIService.getAllBooksSearchResults();
+              // await searchAPIService.getAllBooksSearchResultsScroll();
             }
           }
         },
@@ -48,7 +51,7 @@ class SearchPaginationNavigationButtonWidget extends StatelessWidget {
           child: CircleAvatar(
             child: navigationType == SearchPaginationNavigationType.Next ? Icon(Icons.arrow_forward, color: Colors.black,): Icon(Icons.arrow_back, color: Colors.black,),
             backgroundColor:  Color(0xFFa86f3b),
-            radius: MediaQuery.of(context).size.height *0.02,
+            radius: MediaQuery.of(context).size.height *0.03,
           ),
         ),
       ),

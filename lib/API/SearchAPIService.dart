@@ -48,7 +48,6 @@ class SearchAPIService{
         "searchType": provider.getAllBooksSearchMode,
         "getAllBooksCount": "true",
         "cancelToken": requestProvider.getCurrentTotalBooksCancelToken
-        // "scroll_id": paginationProvider.get_scroll_id
       }
     );
 
@@ -65,9 +64,82 @@ class SearchAPIService{
 
     }
 
-
-
    }
+
+
+       Future<List<Book>> getAllBooksSearchResultsScroll() async{
+    var requestProvider = RequestTokenProvider();
+    List<Book> _searchResults = [];
+    var provider = AllBooksSearchResultsProvider();
+    var paginationProvider = SearchPaginationProvider();
+  
+    provider.setAllBooksSearchResult([]);
+    print("first request is ${provider.getIsFirstRequest}");
+    if(provider.getIsFirstRequest == true){
+        provider.setTotalBooksCount(0);
+        if(paginationProvider.getIsAllBooksCountLoading){
+      paginationProvider.setIsAllBooksCountLoading(false);
+      requestProvider.setPreviousTotalBooksCancelToken(requestProvider.getCurrentTotalBooksCancelToken);
+
+    }
+    provider.setIsLoading(true);
+    }
+    else{
+      provider.setIsLoadingInAllBooksPage(true);
+    }
+    
+  DateTime startTime = DateTime.now();
+  print("Request started at: $startTime");
+
+    var res = await http.post(
+      Uri.parse(API.allBooksSearchScroll),
+      body: {
+        "isFirstRequest": provider.getIsFirstRequest == true ? "true": "false",
+        "searchString": provider.getSearchString,
+        "searchType": provider.getAllBooksSearchMode,
+        "getAllBooksCount": "false",
+        "scroll_id": paginationProvider.get_scroll_id
+      }
+    );
+
+    if(res.statusCode == 200){
+      var data = jsonDecode(res.body);
+      if(provider.getIsFirstRequest == true){
+         int allBooksSearchResultsPagesCount = int.parse(data["pages_count"].toString());
+      paginationProvider.setScrollId(data["scroll_id"].toString());
+      provider.setAllBooksSearchResultsPagesCount(allBooksSearchResultsPagesCount);
+      int allBooksSearchResultsBooksCount = int.parse(data["books_count"].toString());
+      provider.setAllBooksSearchResultsBooksCount(allBooksSearchResultsBooksCount);
+      paginationProvider.setNumOfPages((allBooksSearchResultsPagesCount/10).ceil());
+
+      }
+      List<Map<String, dynamic>> fetchedBooks = (data['results'] as List<dynamic>)
+        .map((item) => item as Map<String, dynamic>)
+        .toList();
+      for (var bookObject in fetchedBooks){
+        _searchResults.add(Book.fromSearchResultJson(bookObject));
+      }
+     
+
+    provider.setAllBooksSearchResult(_searchResults);
+    provider.setIsLoading(false);
+    provider.setIsLoadingInAllBooksPage(false);
+    provider.setAllBooksSearchResultsReceived(true);
+    provider.setIsFirstRequest(false);
+
+    }
+
+      DateTime endTime = DateTime.now();
+  print("Request received at: $endTime");
+
+  // Calculate and print the elapsed time
+  Duration elapsedTime = endTime.difference(startTime);
+  print("Time elapsed: ${elapsedTime.inMilliseconds} ms");
+
+    return _searchResults;
+
+  }
+
 
     Future<List<Book>> getAllBooksSearchResults() async{
     var requestProvider = RequestTokenProvider();

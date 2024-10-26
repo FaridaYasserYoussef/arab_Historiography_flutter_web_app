@@ -97,6 +97,7 @@ class _SearchBarReusableState extends State<SearchBarReusable> {
                                         providerPagination.setSelectedIndex(1);
                                         
                                         await searchService.getAllBooksSearchResults();
+                                        // await searchService.getAllBooksSearchResultsScroll();
                                         // providerAllBooksSearch.setAllBooksSearchResultsPagesCount(allBooksSearchResultsPagesCount);
                                         // providerAllBooksSearch.setAllBooksSearchResultsBooksCount(allBooksSearchResultsBooksCount);
                                         // providerAllBooksSearch.setAllBooksSearchResult(allBooksSearchResults);

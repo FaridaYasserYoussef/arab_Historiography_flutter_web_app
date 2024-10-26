@@ -20,6 +20,7 @@ class SearchPaginationButtonWidget extends StatelessWidget {
         onTap: () async{
           provider.setSelectedIndex(index);
           await searchAPIService.getAllBooksSearchResults();
+          // await searchAPIService.getAllBooksSearchResultsScroll();
         },
         child: HoverContainer(
           hoverDecoration: BoxDecoration(
@@ -35,7 +36,7 @@ class SearchPaginationButtonWidget extends StatelessWidget {
             child: Text(index.toString()),
             backgroundColor: index != provider.getSelectedIndex? Color(0xFFa86f3b): Colors.white,
             foregroundColor: Colors.black,
-            radius: MediaQuery.of(context).size.height *0.02,
+            radius: MediaQuery.of(context).size.height *0.03,
           ),
         ),
       ),
